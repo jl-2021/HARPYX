@@ -25,9 +25,7 @@ classifiers = [
 dependencies = [
     "xarray>=0.16.0",
     "numpy>=1.18.0",
-    # harpy3 must be installed separately from source:
-    #   pip install -e /path/to/HARPY
-    # The package installs as 'harpy3' but imports as 'harpy'.
+    "harpy3 @ git+https://github.com/GEMPACKsoftware/HARPY.git",
 ]
 
 [project.optional-dependencies]

@@ -37,3 +37,7 @@ Thumbs.db
 # HAR test files (generated)
 tests/testdata/test_harpyx.har
 tests/testdata/harpy/
+
+# Claude Code
+CLAUDE.md
+.claude/

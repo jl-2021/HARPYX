@@ -11,11 +11,16 @@ formats used in GEMPACK/ORANI-style CGE models:
 ## Installation
 
 ```bash
-# 1. Install HARPY from local source (not on PyPI)
-pip install -e /path/to/HARPY
+pip install git+https://github.com/jl-2021/HARPYX.git
+```
 
-# 2. Install harpyx
-pip install -e .
+This automatically installs [harpy3](https://github.com/GEMPACKsoftware/HARPY) from GitHub as well.
+
+If you want to use a local HARPY clone (e.g. for development), install it first:
+
+```bash
+pip install -e /path/to/HARPY
+pip install git+https://github.com/jl-2021/HARPYX.git
 ```
 
 ## Quick start
