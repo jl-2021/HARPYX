@@ -1,0 +1,139 @@
+{
+  "description": "Expected values for test_harpyx.har validation",
+  "file": "test_harpyx.har",
+  "created_by": "create_test_data.py",
+
+  "sets": {
+    "COM": {
+      "size": 3,
+      "elements": ["Agriculture", "Manufacture", "Services"],
+      "header_id": "SCOM",
+      "long_name_prefix": "Set COM"
+    },
+    "REG": {
+      "size": 4,
+      "elements": ["USA", "EU", "China", "Japan"],
+      "header_id": "SREG",
+      "long_name_prefix": "Set REG"
+    },
+    "IND": {
+      "size": 5,
+      "elements": ["i1", "i2", "i3", "i4", "i5"],
+      "header_id": "SIND",
+      "long_name_prefix": "Set IND"
+    }
+  },
+
+  "data_arrays": {
+    "PROD": {
+      "header_id": "PROD",
+      "shape": [3, 5],
+      "dims": ["COM", "IND"],
+      "dtype": "float32",
+      "coefficient_name": "PRODUCTION",
+      "long_name": "Production by commodity and industry",
+      "test_values": {
+        "0,0": 1.1,
+        "0,4": 5.5,
+        "2,4": 15.6
+      }
+    },
+    "CONS": {
+      "header_id": "CONS",
+      "shape": [3, 4],
+      "dims": ["COM", "REG"],
+      "dtype": "float32",
+      "coefficient_name": "CONSUMPTION",
+      "long_name": "Consumption by commodity and region",
+      "test_values": {
+        "0,0": 100.0,
+        "1,3": 450.0
+      }
+    },
+    "TRAD": {
+      "header_id": "TRAD",
+      "shape": [3, 4, 4],
+      "dims": ["COM", "REG", "REG"],
+      "dims_xarray": ["COM", "REG__1", "REG__2"],
+      "dtype": "float32",
+      "coefficient_name": "TRADE",
+      "long_name": "Bilateral exports from origin to destination region",
+      "has_duplicate_dims": true,
+      "test_values": {
+        "0,0,1": 123.45,
+        "1,2,3": 678.90,
+        "2,3,0": 111.11
+      }
+    },
+    "GDP": {
+      "header_id": "GDP",
+      "shape": [],
+      "dims": [],
+      "dtype": "float32",
+      "coefficient_name": "TOTGDP",
+      "long_name": "Total GDP across all regions",
+      "is_scalar": true,
+      "value": 1234.5
+    },
+    "CNTS": {
+      "header_id": "CNTS",
+      "shape": [3, 4],
+      "dims": ["COM", "REG"],
+      "dtype": "int32",
+      "coefficient_name": "COUNTS",
+      "long_name": "Count data by commodity and region",
+      "is_integer": true,
+      "test_values": {
+        "0,0": 10,
+        "0,3": 40,
+        "2,3": 120
+      }
+    },
+    "LABR": {
+      "header_id": "LABR",
+      "shape": [5, 4],
+      "dims": ["IND", "REG"],
+      "dtype": "float32",
+      "coefficient_name": "LABOR",
+      "long_name": "Labor employment by industry and region",
+      "test_values": {
+        "0,0": 999.99
+      }
+    }
+  },
+
+  "total_headers": 9,
+  "set_headers": 3,
+  "data_headers": 6,
+
+  "test_cases": {
+    "simple_2d": {
+      "header": "PROD",
+      "expected_dims": ["COM", "IND"],
+      "no_duplicates": true
+    },
+    "duplicate_dims": {
+      "header": "TRAD",
+      "expected_dims_har": ["COM", "REG", "REG"],
+      "expected_dims_xarray": ["COM", "REG__1", "REG__2"],
+      "duplicate_count": 2
+    },
+    "scalar": {
+      "header": "GDP",
+      "expected_ndim": 0,
+      "expected_size": 1
+    },
+    "integer": {
+      "header": "CNTS",
+      "expected_dtype": "int32",
+      "has_coordinates": true
+    }
+  },
+
+  "roundtrip_tests": {
+    "tolerance": 1e-5,
+    "check_metadata": ["header_id", "long_name", "coefficient_name"],
+    "check_dims": true,
+    "check_coords": true
+  }
+}
